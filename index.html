@@ -13,20 +13,34 @@
     </header>
 
     <main>
-        <input type = "s" id="s" placeholder="Displacement (s)" />
-        <input type = "u" id="u" placeholder="Initial Velocity (u)"/>
-        <input type = "v" id="v" placeholder="Final Velocity (v)" />
-        <input type = "a" id="a" placeholder="Acceleration (a)" />
-        <input type = "t" id="t" placeholder="Time (t)" />
+        <div class="input-group">
+            <label for="s">s</label>
+            <input type="number" id="s" placeholder="Displacement (s)" />
+        </div>
+        <div class="input-group">
+            <label for="u">u</label>
+            <input type="number" id="u" placeholder="Initial Velocity (u)" />
+        </div>
+        <div class="input-group">
+            <label for="v">v</label>
+            <input type="number" id="v" placeholder="Final Velocity (v)" />
+        </div>
+        <div class="input-group">
+            <label for="a">a</label>
+            <input type="number" id="a" placeholder="Acceleration (a)" />
+        </div>
+        <div class="input-group">
+            <label for="t">t</label>
+            <input type="number" id="t" placeholder="Time (t)" />
+        </div>
     </main>
-    </body>
-    <body>
+    
+    <div class="buttons">
         <button id="calculate">Calculate</button>
         <button id="reset">Reset</button>
+    </div>
 
-        <p id="output"></p>
-
-    </body>
+    <p id="output"></p>
 
     <footer>
         <small>© 2025</small>
