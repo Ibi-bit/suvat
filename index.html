@@ -3,47 +3,136 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SUVAT</title>
+    <title>SUVAT Calculator Suite</title>
     <meta name="description" content="SUVAT calculator" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
     <header>
-        <h1>SUVAT</h1>
+        <h1>SUVAT Calculator Suite</h1>
     </header>
 
-    <main>
-        <div class="input-group">
-            <label for="s">s</label>
-            <input type="number" id="s" placeholder="Displacement (s)" />
-        </div>
-        <div class="input-group">
-            <label for="u">u</label>
-            <input type="number" id="u" placeholder="Initial Velocity (u)" />
-        </div>
-        <div class="input-group">
-            <label for="v">v</label>
-            <input type="number" id="v" placeholder="Final Velocity (v)" />
-        </div>
-        <div class="input-group">
-            <label for="a">a</label>
-            <input type="number" id="a" placeholder="Acceleration (a)" />
-        </div>
-        <div class="input-group">
-            <label for="t">t</label>
-            <input type="number" id="t" placeholder="Time (t)" />
-        </div>
-    </main>
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+        
+        <button class="tab-btn active" data-tab="onedim">One Dimension</button>
+        <button class="tab-btn" data-tab="twodim">Two Dimension</button>
+    </nav>
+
     
-    <div class="buttons">
-        <button id="calculate">Calculate</button>
-        <button id="reset">Reset</button>
+
+    <div id="onedim" class="tab-content active">
+        <main>
+            <div class="input-group">
+                <label for="s1d">s</label>
+                <input type="number" id="s1d" placeholder="Displacement (s)" />
+            </div>
+            <div class="input-group">
+                <label for="u1d">u</label>
+                <input type="number" id="u1d" placeholder="Initial Velocity (u)" />
+            </div>
+            <div class="input-group">
+                <label for="v1d">v</label>
+                <input type="number" id="v1d" placeholder="Final Velocity (v)" />
+            </div>
+            <div class="input-group">
+                <label for="a1d">a</label>
+                <input type="number" id="a1d" placeholder="Acceleration (a)" />
+            </div>
+            <div class="input-group">
+                <label for="t1d">t</label>
+                <input type="number" id="t1d" placeholder="Time (t)" />
+            </div>
+        </main>
+        
+        <div class="buttons">
+            <button id="calculate1d">Calculate</button>
+            <button class="reset-btn" data-tab="onedim">Reset</button>
+        </div>
+
+        <p id="output1d"></p>
     </div>
+   <div id="twodim" class="tab-content">
+        <main>
+            <h3>Initial Conditions</h3>
+            <div class="input-group">
+                <label for="u0">u₀</label>
+                <input type="number" id="u0" placeholder="Initial Speed (m/s)" />
+            </div>
+            <div class="input-group">
+                <label for="angle">θ</label>
+                <input type="number" id="angle" placeholder="Launch Angle (degrees)" />
+            </div>
+            <div class="input-group">
+                <label for="h0">h₀</label>
+                <input type="number" id="h0" placeholder="Initial Height (m)" />
+            </div>
+            
+            <h3>Horizontal Motion (x-axis)</h3>
+            <div class="input-group">
+                <label for="ux">uₓ</label>
+                <input type="number" id="ux" placeholder="Initial Horizontal Velocity (m/s)" />
+            </div>
+            <div class="input-group">
+                <label for="vx">vₓ</label>
+                <input type="number" id="vx" placeholder="Final Horizontal Velocity (m/s)" />
+            </div>
+            <div class="input-group">
+                <label for="sx">sₓ</label>
+                <input type="number" id="sx" placeholder="Horizontal Displacement (m)" />
+            </div>
+            
+            <h3>Vertical Motion (y-axis)</h3>
+            <div class="input-group">
+                <label for="uy">uᵧ</label>
+                <input type="number" id="uy" placeholder="Initial Vertical Velocity (m/s)" />
+            </div>
+            <div class="input-group">
+                <label for="vy">vᵧ</label>
+                <input type="number" id="vy" placeholder="Final Vertical Velocity (m/s)" />
+            </div>
+            <div class="input-group">
+                <label for="sy">sᵧ</label>
+                <input type="number" id="sy" placeholder="Vertical Displacement (m)" />
+            </div>
+            <div class="input-group">
+                <label for="ay">aᵧ</label>
+                <input type="number" id="ay" placeholder="Vertical Acceleration (m/s²)" value="-9.81" />
+            </div>
+            
+            <h3>Time and Results</h3>
+            <div class="input-group">
+                <label for="t2d">t</label>
+                <input type="number" id="t2d" placeholder="Time (s)" />
+            </div>
+            <div class="input-group">
+                <label for="range">R</label>
+                <input type="number" id="range" placeholder="Range (m)" readonly />
+            </div>
+            <div class="input-group">
+                <label for="maxheight">H</label>
+                <input type="number" id="maxheight" placeholder="Max Height (m)" readonly />
+            </div>
+            <div class="input-group">
+                <label for="timetopeak">t_peak</label>
+                <input type="number" id="timetopeak" placeholder="Time to Peak (s)" readonly />
+            </div>
+        </main>
+        
+        <div class="buttons">
+            <button id="calculate2d">Calculate</button>
+            <button class="reset-btn" data-tab="twodim">Reset</button>
+        </div>
 
-    <p id="output"></p>
-
+        <p id="output2d"></p>
+    </div>
+    
     <footer>
+        <small>Remember to force reload usually with Ctrl+F5 or Cmd+Shift+R
+            or ctrl and press reload button
+        </small>
+        <small>Developed By Ibi-Bit</small>
         <small>© 2025</small>
     </footer>
 

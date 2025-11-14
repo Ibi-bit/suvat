@@ -16,6 +16,50 @@ h1 {
     margin: 0;
 }
 
+/* Tab Navigation */
+.tab-nav {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    border-bottom: 2px solid #ddd;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 15px 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: #3498db;
+}
+
+.tab-btn.active {
+    color: #3498db;
+    border-bottom-color: #3498db;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 main {
     background: white;
     padding: 30px;
@@ -72,11 +116,11 @@ button:hover {
     background-color: #2980b9;
 }
 
-#reset {
+.reset-btn {
     background-color: #e74c3c;
 }
 
-#reset:hover {
+.reset-btn:hover {
     background-color: #c0392b;
 }
 
