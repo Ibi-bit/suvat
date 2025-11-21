@@ -1,6 +1,36 @@
+import * as suvat from 'suvat';
+
 
 // Tab switching functionality
 document.addEventListener("DOMContentLoaded", function() {
+    // Theme initialization
+    const themeToggle = document.getElementById('theme-toggle');
+    function getSavedTheme() {
+        try { return localStorage.getItem('theme'); } catch(e){ return null; }
+    }
+    function saveTheme(t){ try { localStorage.setItem('theme', t); } catch(e){} }
+    function prefersDark() { return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function applyTheme(theme){
+        if(theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+        updateToggleIcon(theme);
+    }
+    function updateToggleIcon(theme){ if(!themeToggle) return; themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙'; }
+
+    // decide initial theme
+    let theme = getSavedTheme();
+    if(!theme) theme = prefersDark() ? 'dark' : 'light';
+    applyTheme(theme);
+
+    if(themeToggle){
+        themeToggle.addEventListener('click', function(){
+            const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            saveTheme(next);
+        });
+    }
+
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     
@@ -81,70 +111,27 @@ function calculateValues1d() {
     var a = parseFloat(acceleration1dInput.value);
     var t = parseFloat(time1dInput.value);
 
-    if (!isNaN(u) && !isNaN(a) && !isNaN(t) && isNaN(s)) {
-        s = u * t + 0.5 * a * t * t;
-        displacement1dInput.value = s.toFixed(2);
-    }
-    else if (!isNaN(u) && !isNaN(v) && !isNaN(t) && isNaN(a)) {
-        a = (v - u) / t;
-        acceleration1dInput.value = a.toFixed(2);
-    }
-    else if (!isNaN(s) && !isNaN(u) && !isNaN(t) && isNaN(a)) {
-        a = (2 * (s - u * t)) / (t * t);
-        acceleration1dInput.value = a.toFixed(2);
-    }
-    else if (!isNaN(s) && !isNaN(a) && !isNaN(t) && isNaN(u)) {
-        u = (s - 0.5 * a * t * t) / t;
-        initialVelocity1dInput.value = u.toFixed(2);
-    }
-    else if (!isNaN(v) && !isNaN(a) && !isNaN(t) && isNaN(u)) {
-        u = v - a * t;
-        initialVelocity1dInput.value = u.toFixed(2);
-    }
-    else if (!isNaN(s) && !isNaN(u) && !isNaN(a) && isNaN(t)) {
-        var discriminant = u * u + 2 * a * s;
-        if (discriminant >= 0) {
-            var root1 = (-u + Math.sqrt(discriminant)) / a;
-            var root2 = (-u - Math.sqrt(discriminant)) / a;
-            t = Math.max(root1, root2);
-            time1dInput.value = t.toFixed(2);
-        }
-    }
-    else if (!isNaN(v) && !isNaN(u) && !isNaN(a) && isNaN(t)) {
-        t = (v - u) / a;
-        time1dInput.value = t.toFixed(2);
-    }
-    else if (!isNaN(s) && !isNaN(v) && !isNaN(a) && isNaN(u)) {
-        var discriminant = v * v - 2 * a * s;
-        if (discriminant >= 0) {
-            var root1 = (v + Math.sqrt(discriminant)) / a;
-            var root2 = (v - Math.sqrt(discriminant)) / a;
-            u = Math.min(root1, root2);
-            initialVelocity1dInput.value = u.toFixed(2);
-        }
-    }
-    else if (!isNaN(s) && !isNaN(v) && !isNaN(t) && isNaN(u)) {
-        u = (2 * s / t) - v;
-        initialVelocity1dInput.value = u.toFixed(2);
-    }
-    else if (!isNaN(s) && !isNaN(u) && !isNaN(v) && isNaN(a)) {
-        a = (v * v - u * u) / (2 * s);
-        acceleration1dInput.value = a.toFixed(2);
-    }
-    else if (!isNaN(s) && !isNaN(v) && !isNaN(a) && isNaN(t)) {
-        var discriminant = v * v - 2 * a * s;
-        if (discriminant >= 0) {
-            var root1 = (v - Math.sqrt(discriminant)) / a;
-            var root2 = (v + Math.sqrt(discriminant)) / a;
-            t = Math.max(root1, root2);
-            time1dInput.value = t.toFixed(2);
-        }
-    }
-    else if (!isNaN(u) && !isNaN(v) && !isNaN(t) && isNaN(s)) {
-        s = ((u + v) / 2) * t;
-        displacement1dInput.value = s.toFixed(2);
-    }
-    else{
+    
+    var data = {};
+    if (!isNaN(s)) data.s = s;
+    if (!isNaN(u)) data.u = u;
+    if (!isNaN(v)) data.v = v;
+    if (!isNaN(a)) data.a = a;
+    if (!isNaN(t)) data.t = t;
+
+    
+    var result = suvat.complete(data);
+    
+    if (result) {
+        
+        if (!isNaN(result.s)) displacement1dInput.value = result.s.toFixed(2);
+        if (!isNaN(result.u)) initialVelocity1dInput.value = result.u.toFixed(2);
+        if (!isNaN(result.v)) finalVelocity1dInput.value = result.v.toFixed(2);
+        if (!isNaN(result.a)) acceleration1dInput.value = result.a.toFixed(2);
+        if (!isNaN(result.t)) time1dInput.value = result.t.toFixed(2);
+        
+        document.getElementById("output1d").textContent = "";
+    } else {
         document.getElementById("output1d").textContent = "Please provide at least three known values to calculate the unknowns.";
     }
 }
