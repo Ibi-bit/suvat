@@ -1,7 +1,6 @@
 import * as suvat from 'suvat';
 
 
-// Tab switching functionality
 document.addEventListener("DOMContentLoaded", function() {
     // Theme initialization
     const themeToggle = document.getElementById('theme-toggle');
@@ -38,14 +37,39 @@ document.addEventListener("DOMContentLoaded", function() {
         btn.addEventListener('click', function() {
             const targetTab = this.getAttribute('data-tab');
             
-            // Remove active class from all tabs and content
             tabBtns.forEach(b => b.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
             
-            // Add active class to clicked tab and corresponding content
             this.classList.add('active');
             document.getElementById(targetTab).classList.add('active');
         });
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark');
+        themeToggle.textContent = '☀️ Light Mode';
+    }
+    
+    themeToggle.addEventListener('click', function() {
+        body.classList.add('theme-switching');
+        
+        if (body.classList.contains('dark')) {
+            body.classList.remove('dark');
+            themeToggle.textContent = '🌙 Dark Mode';
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.add('dark');
+            themeToggle.textContent = '☀️ Light Mode';
+            localStorage.setItem('theme', 'dark');
+        }
+        
+        setTimeout(() => {
+            body.classList.remove('theme-switching');
+        }, 500);
     });
 });
 
